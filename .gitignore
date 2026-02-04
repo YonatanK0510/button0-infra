@@ -1,0 +1,16 @@
+# Terraform local state
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Terraform variable files (may contain secrets)
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+
+# OS / editor junk
+.DS_Store
+.idea/
+.vscode/

@@ -27,3 +27,11 @@ output "public_subnets" {
   description = "Public subnet IDs"
   value       = module.vpc.public_subnets
 }
+
+output "backend_ecr_url" {
+  value = aws_ecr_repository.backend.repository_url
+}
+
+output "frontend_ecr_url" {
+  value = aws_ecr_repository.frontend.repository_url
+}

@@ -2,12 +2,21 @@ provider "aws" {
   region = var.aws_region
 }
 
+data "terraform_remote_state" "core" {
+  backend = "s3"
+  config = {
+    bucket = "button0-terraform-state-186582695522"
+    key    = "button0/dev/core/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 data "aws_eks_cluster" "this" {
-  name = module.eks.cluster_name
+  name = data.terraform_remote_state.core.outputs.cluster_name
 }
 
 data "aws_eks_cluster_auth" "this" {
-  name = module.eks.cluster_name
+  name = data.terraform_remote_state.core.outputs.cluster_name
 }
 
 provider "kubernetes" {
@@ -21,7 +30,7 @@ provider "kubernetes" {
       "eks",
       "get-token",
       "--cluster-name",
-      module.eks.cluster_name,
+      data.terraform_remote_state.core.outputs.cluster_name,
       "--region",
       var.aws_region
     ]
@@ -40,7 +49,7 @@ provider "helm" {
         "eks",
         "get-token",
         "--cluster-name",
-        module.eks.cluster_name,
+        data.terraform_remote_state.core.outputs.cluster_name,
         "--region",
         var.aws_region
       ]

@@ -44,8 +44,8 @@ module "eks" {
   cluster_name    = var.cluster_name
   cluster_version = "1.30"
 
-  cluster_endpoint_public_access = true
-  enable_irsa                    = true
+  cluster_endpoint_public_access           = true
+  enable_irsa                              = true
   enable_cluster_creator_admin_permissions = true
 
   vpc_id     = module.vpc.vpc_id
@@ -56,7 +56,7 @@ module "eks" {
       instance_types = ["t3.medium"]
       min_size       = 1
       max_size       = 2
-      desired_size   = 1
+      desired_size   = 2
     }
   }
 

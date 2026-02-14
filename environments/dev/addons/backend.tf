@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "button0-terraform-state-186582695522"
+    bucket         = "button0-dev-186582695522-eu-central-1-tfstate"
     key            = "button0/dev/addons/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "button0-terraform-locks"
+    region         = "eu-central-1"
+    dynamodb_table = "button0-dev-tf-locks"
     encrypt        = true
   }
 }

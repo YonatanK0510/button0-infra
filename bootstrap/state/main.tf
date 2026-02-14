@@ -1,5 +1,17 @@
+locals {
+  terraform_state_bucket = coalesce(
+    var.bucket_name,
+    "${var.project_name}-terraform-state-${data.aws_caller_identity.current.account_id}"
+  )
+
+  terraform_lock_table = coalesce(
+    var.dynamodb_table_name,
+    "${var.project_name}-terraform-locks"
+  )
+}
+
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "${var.project_name}-terraform-state-${data.aws_caller_identity.current.account_id}"
+  bucket = local.terraform_state_bucket
 }
 resource "aws_s3_bucket_versioning" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
@@ -23,7 +35,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
   restrict_public_buckets = true
 }
 resource "aws_dynamodb_table" "terraform_locks" {
-  name           = "${var.project_name}-terraform-locks"
+  name           = local.terraform_lock_table
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "LockID"
   attribute {

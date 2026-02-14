@@ -21,3 +21,15 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
+
+variable "bucket_name" {
+  type        = string
+  description = "Optional override for the Terraform state bucket name. If null, uses <project>-terraform-state-<account_id>."
+  default     = null
+}
+
+variable "dynamodb_table_name" {
+  type        = string
+  description = "Optional override for the Terraform lock table name. If null, uses <project>-terraform-locks."
+  default     = null
+}

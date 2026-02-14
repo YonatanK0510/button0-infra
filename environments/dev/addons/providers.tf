@@ -5,9 +5,11 @@ provider "aws" {
 data "terraform_remote_state" "core" {
   backend = "s3"
   config = {
-    bucket = "button0-terraform-state-186582695522"
-    key    = "button0/dev/core/terraform.tfstate"
-    region = "us-east-1"
+    bucket         = "button0-dev-186582695522-eu-central-1-tfstate"
+    key            = "button0/dev/core/terraform.tfstate"
+    region         = "eu-central-1"
+    dynamodb_table = "button0-dev-tf-locks"
+    encrypt        = true
   }
 }
 
